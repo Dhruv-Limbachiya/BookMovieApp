@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <div className="header">
             <div>
-                <img src={AppLogo} className='app-logo' />
+                <img src={AppLogo} className='app-logo rotate-anim'/>
             </div>
             <div>
                 <button>Login</button>

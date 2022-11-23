@@ -11,6 +11,7 @@ const Controller = () => {
   return (
     <Router>
       <div className="main-container">
+        {/* Commented for testing purpose */}
         {/* <Route
           exact
           path="/"
