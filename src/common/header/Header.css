@@ -16,6 +16,10 @@
     animation: rotate 8s infinite ;
 }
 
+.header-btn {
+    background-color: #fff;
+}
+
 @keyframes rotate {
     0% {
         transform: rotateY(0deg);
