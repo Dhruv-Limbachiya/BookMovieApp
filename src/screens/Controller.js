@@ -3,7 +3,7 @@ import React from "react";
 // import Details from "../screens/details/Details";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import BookShow from "../screens/bookshow/BookShow";
-import Confirmation from "../screens/confirmation/Confirmation";
+// import Confirmation from "../screens/confirmation/Confirmation";
 
 const Controller = () => {
   const baseUrl = "/api/v1/";
@@ -11,6 +11,7 @@ const Controller = () => {
   return (
     <Router>
       <div className="main-container">
+        {/* Commented for testing purpose */}
         {/* <Route
           exact
           path="/"
@@ -29,7 +30,7 @@ const Controller = () => {
           render={(props) => <Confirmation {...props} baseUrl={baseUrl} />}
         /> */}
 
-<Route
+        <Route
           path="/"
           render={(props) => <BookShow {...props} baseUrl={baseUrl} />}
         />

@@ -2,20 +2,25 @@
     background-color: #222;
     height: 36px;
     padding: 8px 32px 8px 16px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .app-logo {
+    height: 36px;
     background-color: #ff7f7f;
     height: 35px;
-    text-align: start;
 }
 
-.rotate {
-    animation: spin 8s infinite;
-    animation-timing-function: linear;
+.rotate-anim {
+    animation: rotate 8s infinite ;
 }
 
-@keyframes spin {
+.header-btn {
+    background-color: #fff;
+}
+
+@keyframes rotate {
     0% {
         transform: rotateY(0deg);
     }
@@ -25,7 +30,8 @@
     }
 }
 
-.btn {
-    float: right;
-    margin-right:100px;
+.tab-list-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
