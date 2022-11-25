@@ -98,7 +98,7 @@ const Header = (props) => {
     return (
         <div className="header">
             <div>
-                <img src={AppLogo} className='app-logo rotate-anim' />
+                <img src={AppLogo} className='app-logo rotate-anim' alt='movie-app-logo' />
             </div>d
             <div>
                 <Button variant='contained' color='primary' onClick={handleOpen} style={{ marginRight: "10px" }}>Book Show</Button>

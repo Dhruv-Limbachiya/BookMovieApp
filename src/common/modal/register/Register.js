@@ -141,7 +141,7 @@ const Register = (props) => {
 
                 <br /> <br />
 
-                <FormControl required password className="formControl">
+                <FormControl required  className="formControl">
                     <InputLabel htmlFor="contact-no">Contact No.</InputLabel>
                     <Input id="contact-no" value={contactNo} onChange={onContactNoChanged} />
                     <FormHelperText className={reqContactNo}>
