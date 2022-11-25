@@ -9,6 +9,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TextField from '@mui/material/TextField';
+import Register from '../modal/register/Register'
 import Login from "../modal/Login";
 
 
@@ -65,7 +66,7 @@ const Header = () => {
                             </TabList>
                         </div>
                         <TabPanel value="1"><Login/></TabPanel>
-                        <TabPanel value="2"><TextField id="standard-basic" label="Standard" variant="standard" /></TabPanel>
+                        <TabPanel value="2"><Register baseUrl={props.baseUrl}/></TabPanel>
                     </TabContext>
                 </Box>
             </Modal>
