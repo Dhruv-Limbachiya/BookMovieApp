@@ -8,7 +8,6 @@ import '../Modal.css'
 
 
 const Register = (props) => {
-
     const [firstName, setFirstName] = useState('');
     const [reqFirstName, setReqFirstName] = useState("dispNone");
 

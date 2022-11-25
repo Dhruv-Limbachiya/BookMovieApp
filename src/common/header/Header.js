@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './Header.css';
 import AppLogo from '../../assets/logo.svg';
 import { Button } from "@material-ui/core";
@@ -27,7 +27,7 @@ const modalBoxStyle = {
 
 const Header = (props) => {
 
-    const isLoggedIn = sessionStorage.getItem('access_token')
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     // state to manage modal
     const [open, setOpen] = React.useState(false);
@@ -44,12 +44,35 @@ const Header = (props) => {
     let headerButton;
 
     if (isLoggedIn) {
-        headerButton = <Button variant='contained'>Logout</Button>
+        headerButton = <Button variant='contained' onClick={onLogoutButtonClick}>Logout</Button>
     } else {
         headerButton = <Button variant='contained' onClick={handleOpen}>Login</Button>
     }
 
-    function LoginRegisterModal(){
+
+    async function onLogoutButtonClick() {
+        try {
+            const rawResponse = await fetch('http://localhost:8085/api/v1/auth/logout', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "Accept": "application/json;charset=UTF-8",
+                    authorization: `Bearer ${sessionStorage.getItem('access-token')}`
+                },
+            });
+            if (rawResponse.ok) {
+                sessionStorage.clear();
+                setIsLoggedIn(false)
+            } else {
+                const response = await rawResponse.json();
+                throw (new Error(response.message || 'Something went wrong!'));
+            }
+        } catch (e) {
+            alert(`Error: ${e.message}`);
+        }
+    }
+
+    function LoginRegisterModal() {
         return (
             <Modal
                 open={open}
@@ -64,8 +87,8 @@ const Header = (props) => {
                                 <Tab label="Register" value="2" />
                             </TabList>
                         </div>
-                        <TabPanel value="1"><Login/></TabPanel>
-                        <TabPanel value="2"><Register baseUrl={props.baseUrl}/></TabPanel>
+                        <TabPanel value="1"><Login setIsLoggedIn={setIsLoggedIn} handleClose={handleClose} /></TabPanel>
+                        <TabPanel value="2"><Register baseUrl={props.baseUrl} /></TabPanel>
                     </TabContext>
                 </Box>
             </Modal>
@@ -81,7 +104,7 @@ const Header = (props) => {
                 <Button variant='contained' color='primary' onClick={handleOpen} style={{ marginRight: "10px" }}>Book Show</Button>
                 {headerButton}
             </div>
-            <LoginRegisterModal/>
+            <LoginRegisterModal />
         </div >
     )
 }

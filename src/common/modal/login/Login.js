@@ -6,10 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
-const Login = () => {
-
-    
-
+const Login = (props) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -43,6 +40,10 @@ const Login = () => {
                 if (rawResponse.ok) {
                     window.sessionStorage.setItem('user-details', JSON.stringify(response));
                     window.sessionStorage.setItem('access-token', rawResponse.headers.get('access-token'));
+                    if(sessionStorage.getItem('access-token')) {
+                        props.setIsLoggedIn(true);
+                        props.handleClose()
+                    }
                 } else {
                     throw (new Error(response.message || 'Something went wrong!'))
                 }
@@ -57,16 +58,13 @@ const Login = () => {
         username === '' ? setReqUsername('dispBlock') : setReqUsername("dispNone");
         password === '' ? setReqPassword('dispBlock') : setReqPassword("dispNone");
 
-        if (
-            username === "" ||
-            password === ""
-        ) {
+        if (username === "" || password === "") {
             return false;
         }
 
         return true;
     }
-    
+
 
     return (
         <div className="container">
