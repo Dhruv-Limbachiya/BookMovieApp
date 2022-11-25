@@ -4,6 +4,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import '../Modal.css'
+
 
 const Register = (props) => {
 
@@ -22,7 +24,7 @@ const Register = (props) => {
     const [contactNo, setContactNo] = useState('');
     const [reqContactNo, setReqContactNo] = useState("dispNone");
 
-    const [registrationStatus,setRegistrationStatus] = useState(false);
+    const [registrationStatus, setRegistrationStatus] = useState(false);
 
     const onFirstNameChanged = (e) => {
         setFirstName(e.target.value.split(","))
@@ -45,7 +47,7 @@ const Register = (props) => {
     }
 
     const onRegisterButtonClick = async () => {
-        if(validateUserInput()) {
+        if (validateUserInput()) {
             const registerBody = {
                 "email_address": email[0],
                 "first_name": firstName[0],
@@ -53,7 +55,7 @@ const Register = (props) => {
                 "mobile_number": contactNo[0],
                 "password": password[0]
             }
-    
+
             try {
                 const rawResponse = await fetch('http://localhost:8085/api/v1/signup', {
                     method: "POST",
@@ -63,13 +65,13 @@ const Register = (props) => {
                     },
                     body: JSON.stringify(registerBody)
                 })
-    
+
                 const response = await rawResponse.json()
-    
+
                 if (rawResponse.ok) {
                     setRegistrationStatus(true);
                 } else {
-                    throw(new Error(response.error || 'Something went wrong!'))
+                    throw (new Error(response.message || 'Something went wrong!'))
                 }
             } catch (e) {
                 alert(`Error: ${e.message}`);
@@ -98,73 +100,77 @@ const Register = (props) => {
     }
 
     return (
-        <div>
-            <FormControl required className="formControl">
-                <InputLabel htmlFor="firstname">First Name</InputLabel>
-                <Input id="firstname" value={firstName} onChange={onFirstNameChanged} />
-                <FormHelperText className={reqFirstName}>
-                    <span className="red">Required</span>
-                </FormHelperText>
-            </FormControl>
+        <div className="container">
+            <div>
+                <FormControl required className="formControl">
+                    <InputLabel htmlFor="firstname">First Name</InputLabel>
+                    <Input id="firstname" value={firstName} onChange={onFirstNameChanged} />
+                    <FormHelperText className={reqFirstName}>
+                        <span className="red">Required</span>
+                    </FormHelperText>
+                </FormControl>
 
-            <br /> <br />
+                <br /> <br />
 
-            <FormControl required className="formControl">
-                <InputLabel htmlFor="lastname">Last Name</InputLabel>
-                <Input id="lastname" value={lastName} onChange={onLastNameChanged} />
-                <FormHelperText className={reqLastName}>
-                    <span className="red">Required</span>
-                </FormHelperText>
-            </FormControl>
+                <FormControl required className="formControl">
+                    <InputLabel htmlFor="lastname">Last Name</InputLabel>
+                    <Input id="lastname" value={lastName} onChange={onLastNameChanged} />
+                    <FormHelperText className={reqLastName}>
+                        <span className="red">Required</span>
+                    </FormHelperText>
+                </FormControl>
 
-            <br /> <br />
+                <br /> <br />
 
-            <FormControl required className="formControl">
-                <InputLabel htmlFor="email">Email</InputLabel>
-                <Input id="email" type={"email"} value={email} onChange={onEmailChanged} />
-                <FormHelperText className={reqEmail}>
-                    <span className="red">Required</span>
-                </FormHelperText>
-            </FormControl>
+                <FormControl required className="formControl">
+                    <InputLabel htmlFor="email">Email</InputLabel>
+                    <Input id="email" type={"email"} value={email} onChange={onEmailChanged} />
+                    <FormHelperText className={reqEmail}>
+                        <span className="red">Required</span>
+                    </FormHelperText>
+                </FormControl>
 
-            <br /> <br />
+                <br /> <br />
 
-            <FormControl required className="formControl">
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input id="password" type={"password"} value={password} onChange={onPasswordChanged} />
-                <FormHelperText className={reqPassword}>
-                    <span className="red">Required</span>
-                </FormHelperText>
-            </FormControl>
+                <FormControl required className="formControl">
+                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <Input id="password" type={"password"} value={password} onChange={onPasswordChanged} />
+                    <FormHelperText className={reqPassword}>
+                        <span className="red">Required</span>
+                    </FormHelperText>
+                </FormControl>
 
-            <br /> <br />
+                <br /> <br />
 
-            <FormControl required password className="formControl">
-                <InputLabel htmlFor="contact-no">Contact No.</InputLabel>
-                <Input id="contact-no" value={contactNo} onChange={onContactNoChanged} />
-                <FormHelperText className={reqContactNo}>
-                    <span className="red">Required</span>
-                </FormHelperText>
-            </FormControl>
+                <FormControl required password className="formControl">
+                    <InputLabel htmlFor="contact-no">Contact No.</InputLabel>
+                    <Input id="contact-no" value={contactNo} onChange={onContactNoChanged} />
+                    <FormHelperText className={reqContactNo}>
+                        <span className="red">Required</span>
+                    </FormHelperText>
+                </FormControl>
+
+                <br /> <br />
+
+                {registrationStatus ? <RegistrationSuccessMessage /> : null}
+                
+            </div>
 
             <br />
 
-            {registrationStatus ? <RegistrationSuccessMessage/> : null}
-
-            <br /> <br />
-
-            <Button
-                variant="contained"
-                onClick={onRegisterButtonClick}
-                color="primary">
-                Register
-            </Button>
-
+            <div className="btn-holder">
+                <Button
+                    variant="contained"
+                    onClick={onRegisterButtonClick}
+                    color="primary">
+                    Register
+                </Button>
+            </div>
         </div>
     )
 }
 
-function RegistrationSuccessMessage () {
+function RegistrationSuccessMessage() {
     return (
         <div><p>Registration Successful. Please Login!</p></div>
     )

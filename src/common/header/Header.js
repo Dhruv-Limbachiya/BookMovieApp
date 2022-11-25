@@ -8,9 +8,8 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
-import TextField from '@mui/material/TextField';
 import Register from '../modal/register/Register'
-import Login from "../modal/Login";
+import Login from "../modal/login/Login";
 
 
 
@@ -26,7 +25,7 @@ const modalBoxStyle = {
     borderRadius: '5px'
 };
 
-const Header = () => {
+const Header = (props) => {
 
     const isLoggedIn = sessionStorage.getItem('access_token')
 
@@ -47,7 +46,7 @@ const Header = () => {
     if (isLoggedIn) {
         headerButton = <Button variant='contained'>Logout</Button>
     } else {
-        headerButton = <Button variant='contained'>Login</Button>
+        headerButton = <Button variant='contained' onClick={handleOpen}>Login</Button>
     }
 
     function LoginRegisterModal(){

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './Login.css'
+import '../Modal.css'
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
@@ -8,11 +8,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const Login = () => {
 
-    const onLoginButtonClick = () => {
-        username === '' ? setReqUsername('dispBlock') : setReqUsername("dispNone");
-        password === '' ? setReqPassword('dispBlock') : setReqPassword("dispNone");
-        return;
-    }
+    
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -28,6 +24,49 @@ const Login = () => {
     const onPasswordChange = (e) => {
         setPassword(e.target.value.split(","));
     }
+
+    const onLoginButtonClick = async () => {
+        if (validateUserInput()) {
+            const param = window.btoa(`${username[0]}:${password[0]}`)
+            try {
+                const rawResponse = await fetch('http://localhost:8085/api/v1/auth/login', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                        "Accept": "application/json;charset=UTF-8",
+                        authorization: `Basic ${param}`
+                    },
+                })
+
+                const response = await rawResponse.json()
+
+                if (rawResponse.ok) {
+                    window.sessionStorage.setItem('user-details', JSON.stringify(response));
+                    window.sessionStorage.setItem('access-token', rawResponse.headers.get('access-token'));
+                } else {
+                    throw (new Error(response.message || 'Something went wrong!'))
+                }
+            } catch (e) {
+                alert(`Error: ${e.message}`);
+            }
+        }
+        return;
+    }
+
+    const validateUserInput = () => {
+        username === '' ? setReqUsername('dispBlock') : setReqUsername("dispNone");
+        password === '' ? setReqPassword('dispBlock') : setReqPassword("dispNone");
+
+        if (
+            username === "" ||
+            password === ""
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+    
 
     return (
         <div className="container">
