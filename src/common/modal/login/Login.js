@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../Modal.css'
+import '../stylesheet/Modal.css'
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";

@@ -4,8 +4,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import '../Modal.css'
-
+import '../stylesheet/Modal.css'
 
 const Register = (props) => {
     const [firstName, setFirstName] = useState('');
