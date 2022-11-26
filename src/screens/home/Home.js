@@ -4,7 +4,7 @@ import './Home.css';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-
+import FilterCard from "./FIlteCard";
 
 const Home = () => {
     return (
@@ -23,7 +23,7 @@ const Home = () => {
                     <ReleasedMovies />
                 </div>
                 <div className="movie-filter grid-24 margin-16">
-                    Hello
+                    <FilterCard />
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@ export function UpcomingMovies() {
             {
                 upcomingMovies.map((movie) => (
                     <ImageListItem key={movie.id}>
-                        <img src={movie.poster_url} />
+                        <img src={movie.poster_url} alt={movie.title} />
                         <ImageListItemBar title={movie.title} />
                     </ImageListItem>
                 ))
@@ -95,7 +95,7 @@ export function ReleasedMovies() {
     const getReleasedMovies = async () => {
         try {
             const status = 'RELEASED';
-        
+
             const rawResponse = await fetch(`http://localhost:8085/api/v1/movies?status=${status}`, {
                 method: "GET",
                 headers: {
@@ -120,13 +120,13 @@ export function ReleasedMovies() {
         <ImageList
             rowHeight={350}
             cols={4}
-            sx={{overflow:'hidden',margin:'auto'}}
+            sx={{ overflow: 'hidden', margin: 'auto' }}
             gap={10}
-            >
+        >
             {
                 releasedMovies.map((movie) => (
                     <ImageListItem key={movie.id}>
-                        <img src={movie.poster_url}  />
+                        <img src={movie.poster_url} alt={movie.title} />
                         <ImageListItemBar title={movie.title} subtitle={`Released Date : ${movie.release_date}`} />
                     </ImageListItem>
                 ))
@@ -134,5 +134,7 @@ export function ReleasedMovies() {
         </ImageList>
     )
 }
+
+
 
 export default Home;
