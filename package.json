@@ -11,6 +11,8 @@
     "@mui/lab": "^5.0.0-alpha.109",
     "@mui/material": "^5.10.15",
     "@mui/styles": "^5.10.15",
+    "@mui/x-date-pickers": "^5.0.9",
+    "dayjs": "^1.11.6",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-modal": "^3.12.1",

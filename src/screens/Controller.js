@@ -35,6 +35,10 @@ const Controller = () => {
           path="/"
           render={(props) => <Home {...props} baseUrl={baseUrl} />}
         />
+         {/* <Route
+          path="/"
+          render={(props) => <BookShow {...props} baseUrl={baseUrl} />}
+        /> */}
       </div>
     </Router>
   );

@@ -4,7 +4,7 @@ import './Home.css';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import FilterCard from "./FIlteCard";
+import FilterCard from "./FilterCard";
 
 const Home = () => {
     return (
