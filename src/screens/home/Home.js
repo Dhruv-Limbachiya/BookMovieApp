@@ -8,16 +8,33 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 
 const Home = () => {
+    return (
+        <div>
+            <Header />
+            <div id='upcoming-movies-container'>
+                <div id='upcoming-movies-heading'>
+                    Upcoming Movies
+                </div>
+            </div>
+            <div>
+                <UpcomingMovies />
+            </div>
+        </div>
+    )
+}
 
+export function UpcomingMovies() {
     const [upcomingMovies, setUpcomingMovies] = useState([])
 
     useEffect(() => {
         getUpcomingMovies()
     }, [])
 
+    // Make an api call for get published/upcoming movies
     const getUpcomingMovies = async () => {
         try {
-            const status = 'PUBLISHED';
+            const status = 'PUBLISHED'; // Published == Upcoming
+            // Will return 6 upcoming movies as I set limit to 6 (as per requirement)
             const rawResponse = await fetch(`http://localhost:8085/api/v1/movies?status=${status}&limit=6`, {
                 method: "GET",
                 headers: {
@@ -39,34 +56,24 @@ const Home = () => {
     }
 
     return (
-        <div>
-            <Header />
-            <div id='upcoming-movies-container'>
-                <div id='upcoming-movies-heading'>
-                    Upcoming Movies
-                </div>
-            </div>
-            <div>
-                <ImageList
-                    rowHeight={250}
-                    sx={{
-                        gridAutoFlow: "column",
-                        gridTemplateColumns: "repeat(auto-fill,minmax(250px,1fr)) !important",
-                        gridAutoColumns: "minmax(250px, 1fr)",
-                        margin: 'auto',
-                        overflowY:'hidden'
-                    }}>
-                    {
-                        upcomingMovies.map((movie) => (
-                            <ImageListItem key={movie.id}>
-                                <img src={movie.poster_url} />
-                                <ImageListItemBar title={movie.title} />
-                            </ImageListItem>
-                        ))
-                    }
-                </ImageList>
-            </div>
-        </div>
+        <ImageList
+            rowHeight={250}
+            sx={{
+                gridAutoFlow: "column",
+                gridTemplateColumns: "repeat(auto-fill,minmax(250px,1fr)) !important",
+                gridAutoColumns: "minmax(250px, 1fr)",
+                margin: 'auto',
+                overflowY: 'hidden'
+            }}>
+            {
+                upcomingMovies.map((movie) => (
+                    <ImageListItem key={movie.id}>
+                        <img src={movie.poster_url} />
+                        <ImageListItemBar title={movie.title} />
+                    </ImageListItem>
+                ))
+            }
+        </ImageList>
     )
 }
 
