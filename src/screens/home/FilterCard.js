@@ -1,4 +1,4 @@
-import { Checkbox, ListItemText, Typography, withStyles } from "@material-ui/core";
+import { Checkbox, ListItemText, TextField, withStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import CardActions from '@mui/material/CardActions';
 import FormControl from "@material-ui/core/FormControl";
@@ -9,6 +9,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+
 
 
 
@@ -96,9 +97,9 @@ function FilterCard(props) {
     return (
         <Card sx={{ margin: 'auto' }}>
             <CardContent>
-                <Typography className={classes.formControl} >
+                <div className={classes.formControl} >
                     <h5 className={classes.cardTitle} >Find Movies By:</h5>
-                </Typography>
+                </div>
 
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="movies-name">Movies Name</InputLabel>
@@ -108,8 +109,6 @@ function FilterCard(props) {
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="genres">Genres</InputLabel>
                     <Select
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
                         multiple
                         renderValue={(selected) => selected.map((x) => x.genre).join(', ')}
                         value={genre}
@@ -130,10 +129,9 @@ function FilterCard(props) {
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="artists">Artists</InputLabel>
                     <Select
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
+
                         multiple
-                        renderValue={(selected) => selected.map((x) =>  x.first_name+" "+x.last_name).join(', ')}
+                        renderValue={(selected) => selected.map((x) => x.first_name + " " + x.last_name).join(', ')}
                         value={artist}
                         onChange={artistsChangeListener}>
                         {
@@ -143,7 +141,7 @@ function FilterCard(props) {
                                         artist.findIndex((i) => i.id === item.id) >= 0
                                     }
                                     />
-                                    <ListItemText primary={item.first_name +" "+item.last_name} />
+                                    <ListItemText primary={item.first_name + " " + item.last_name} />
                                 </MenuItem>
                             ))
                         }
@@ -151,13 +149,25 @@ function FilterCard(props) {
                 </FormControl>
 
                 <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="release-start-date" shrink='false'>Release Date Start</InputLabel>
-                    <Input id="release-start-date" type='date' />
+                    <TextField
+                        label="Release Date Start"
+                        type="date"
+                        defaultValue="dd-mm-yyyy"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
                 </FormControl>
 
                 <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="release-start-end" shrink='false'>Release Date End</InputLabel>
-                    <Input id="release-start-end" type='date' />
+                    <TextField
+                        label="Release Date End"
+                        type="date"
+                        defaultValue="dd-mm-yyyy"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
                 </FormControl>
 
 
