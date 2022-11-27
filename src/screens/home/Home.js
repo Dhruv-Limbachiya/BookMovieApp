@@ -5,8 +5,19 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import FilterCard from "./FilterCard";
+import '../../common/stylesheet/common.css'
+
 
 const Home = () => {
+
+    const [filterParam, setFilterParam] = useState({ 
+        'title': '',
+        'genres': '',
+        'artists':'',
+        'startDate': '',
+        'endDate':''
+    });
+
     return (
         <div>
             <Header />
@@ -20,10 +31,10 @@ const Home = () => {
             </div>
             <div id="released-movies-and-filter-container">
                 <div className="released-movies grid-76 margin-16">
-                    <ReleasedMovies />
+                    <ReleasedMovies filterParam={filterParam} />
                 </div>
                 <div className="movie-filter grid-24 margin-16">
-                    <FilterCard />
+                    <FilterCard setFilterParam={setFilterParam} />
                 </div>
             </div>
         </div>
@@ -84,19 +95,24 @@ export function UpcomingMovies() {
     )
 }
 
-export function ReleasedMovies() {
+
+export function ReleasedMovies(props) {
+
     const [releasedMovies, setReleasedMovies] = useState([])
+
+    const { title, genres, artists, startDate, endDate } = props.filterParam;
 
     useEffect(() => {
         getReleasedMovies()
-    }, [])
+    }, [props.filterParam])
 
     // Make an api call for get released movies
     const getReleasedMovies = async () => {
         try {
             const status = 'RELEASED';
+            const url = `http://localhost:8085/api/v1/movies?status=${status}&title=${title}&start_date=${startDate}&end_date=${endDate}&genre=${genres}&artists=${artists}`
 
-            const rawResponse = await fetch(`http://localhost:8085/api/v1/movies?status=${status}`, {
+            const rawResponse = await fetch(url, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json;charset=UTF-8",
@@ -125,7 +141,7 @@ export function ReleasedMovies() {
         >
             {
                 releasedMovies.map((movie) => (
-                    <ImageListItem key={movie.id}>
+                    <ImageListItem key={movie.id} className='back'>
                         <img src={movie.poster_url} alt={movie.title} />
                         <ImageListItemBar title={movie.title} subtitle={`Released Date : ${movie.release_date}`} />
                     </ImageListItem>

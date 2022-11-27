@@ -11,8 +11,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
 
-
-
 const styles = (theme) => ({
     formControl: {
         margin: theme.spacing.unit,
@@ -94,6 +92,57 @@ function FilterCard(props) {
         }
     }
 
+
+    const applyFilterHandler = () => {
+        console.log(genre)
+
+        let paramGenre = '';
+
+        for (let i = 0; i < genre.length; i++) {
+            if (genre.length == i + 1) {
+                paramGenre += genre[i]['genre']
+            } else {
+                paramGenre += genre[i]['genre'] + ','
+            }
+        }
+
+        let paramArtist = '';
+
+        for (let i = 0; i < artist.length; i++) {
+            if (artist.length == i + 1) {
+                paramArtist += artist[i]['first_name'] + ' ' + artist[i]['last_name']
+            } else {
+                paramArtist += artist[i]['first_name'] + ' ' + artist[i]['last_name'] + ','
+            }
+        }
+
+        const params = {
+            'title': movie,
+            'genres': paramGenre,
+            'artists': paramArtist,
+            'startDate': startDate,
+            'endDate': endDate
+        }
+        props.setFilterParam(params)
+    }
+
+    const [movie, setMovie] = useState('')
+    const onMovieNameChanged = (e) => {
+        setMovie(e.target.value)
+    }
+
+
+    const [startDate, setStartDate] = useState('')
+    const onStartDateChanged = (e) => {
+        setStartDate(e.target.value)
+    }
+
+    const [endDate, setEndDate] = useState('')
+    const onEndDateChanged = (e) => {
+        setEndDate(e.target.value)
+    }
+
+
     return (
         <Card sx={{ margin: 'auto' }}>
             <CardContent>
@@ -103,7 +152,7 @@ function FilterCard(props) {
 
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="movies-name">Movies Name</InputLabel>
-                    <Input id="movies-name" />
+                    <Input id="movies-name" value={movie} onChange={onMovieNameChanged} />
                 </FormControl>
 
                 <FormControl className={classes.formControl}>
@@ -129,7 +178,6 @@ function FilterCard(props) {
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="artists">Artists</InputLabel>
                     <Select
-
                         multiple
                         renderValue={(selected) => selected.map((x) => x.first_name + " " + x.last_name).join(', ')}
                         value={artist}
@@ -156,6 +204,8 @@ function FilterCard(props) {
                         InputLabelProps={{
                             shrink: true,
                         }}
+                        value={startDate}
+                        onChange={onStartDateChanged}
                     />
                 </FormControl>
 
@@ -167,6 +217,8 @@ function FilterCard(props) {
                         InputLabelProps={{
                             shrink: true,
                         }}
+                        value={endDate}
+                        onChange={onEndDateChanged}
                     />
                 </FormControl>
 
@@ -179,6 +231,7 @@ function FilterCard(props) {
                         variant="contained"
                         color="primary"
                         fullWidth
+                        onClick={applyFilterHandler}
                     >
                         Apply
                     </Button>
