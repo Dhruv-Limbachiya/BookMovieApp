@@ -136,13 +136,6 @@ export function ReleasedMovies(props) {
         }
     }
 
-    const onMovieItemClick = (id) => {
-        props.history.push({
-            pathname: "/movie/" + params.id,
-            movieId: id
-        });
-    }
-
     return (
         <ImageList
             rowHeight={350}
