@@ -1,9 +1,9 @@
 import React from "react";
 import Home from "../screens/home/Home";
-// import Details from "../screens/details/Details";
+import Details from "../screens/details/Details";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import BookShow from "../screens/bookshow/BookShow";
-// import Confirmation from "../screens/confirmation/Confirmation";
+import Confirmation from "../screens/confirmation/Confirmation";
 
 const Controller = () => {
   const baseUrl = "/api/v1/";
@@ -12,7 +12,7 @@ const Controller = () => {
     <Router>
       <div className="main-container">
         {/* Commented for testing purpose */}
-        {/* <Route
+        <Route
           exact
           path="/"
           render={(props) => <Home {...props} baseUrl={baseUrl} />}
@@ -25,20 +25,12 @@ const Controller = () => {
           path="/bookshow/:id"
           render={(props) => <BookShow {...props} baseUrl={baseUrl} />}
         />
+
         <Route
           path="/confirm/:id"
           render={(props) => <Confirmation {...props} baseUrl={baseUrl} />}
-        /> */}
-
-        <Route
-          exact
-          path="/"
-          render={(props) => <Home {...props} baseUrl={baseUrl} />}
         />
-         {/* <Route
-          path="/"
-          render={(props) => <BookShow {...props} baseUrl={baseUrl} />}
-        /> */}
+        
       </div>
     </Router>
   );

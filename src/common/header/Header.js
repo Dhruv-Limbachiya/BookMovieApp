@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Header.css';
 import AppLogo from '../../assets/logo.svg';
 import { Button } from "@material-ui/core";
@@ -10,6 +10,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import Register from '../modal/register/Register'
 import Login from "../modal/login/Login";
+import { Link } from "react-router-dom";
 
 
 
@@ -40,6 +41,15 @@ const Header = (props) => {
     const onTabChange = (event, newValue) => { // event handler for tab selection
         setTabValue(newValue);
     };
+
+    useEffect(() => {
+        // initial check if the user is already logged in or not.
+        const accessToken = sessionStorage.getItem('access-token')
+        if (accessToken) {
+            setIsLoggedIn(true);
+        }
+    }, [])
+
 
     let headerButton;
 
@@ -95,13 +105,27 @@ const Header = (props) => {
         )
     }
 
+    const onBookButtonClick = () => {
+        if (!isLoggedIn) {
+            handleOpen()
+        }
+    }
+
+    const bookNowButton = '';
+
     return (
         <div className="header">
             <div>
                 <img src={AppLogo} className='app-logo rotate-anim' alt='movie-app-logo' />
             </div>
             <div>
-                <Button variant='contained' color='primary' onClick={handleOpen} style={{ marginRight: "10px" }}>Book Show</Button>
+                {props.showBookNow ?
+                    (isLoggedIn ? <Link to={`/bookshow/${props.movieId}`} style={{ textDecoration: 'none' }}>
+                                     <Button variant='contained' color='primary' style={{ marginRight: "10px" }}>Book Show</Button>
+                                  </Link> 
+                                : <Button variant='contained' color='primary' style={{ marginRight: "10px" }} onClick={onBookButtonClick}>Book Show</Button>)
+                    : null
+                }
                 {headerButton}
             </div>
             <LoginRegisterModal />

@@ -6,16 +6,18 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import FilterCard from "./FilterCard";
 import '../../common/stylesheet/common.css'
+import { Link, useParams} from 'react-router-dom';
 
 
-const Home = () => {
 
-    const [filterParam, setFilterParam] = useState({ 
+const Home = (props) => {
+
+    const [filterParam, setFilterParam] = useState({
         'title': '',
         'genres': '',
-        'artists':'',
+        'artists': '',
         'startDate': '',
-        'endDate':''
+        'endDate': ''
     });
 
     return (
@@ -31,7 +33,7 @@ const Home = () => {
             </div>
             <div id="released-movies-and-filter-container">
                 <div className="released-movies grid-76 margin-16">
-                    <ReleasedMovies filterParam={filterParam} />
+                    <ReleasedMovies filterParam={filterParam} history={props.history} />
                 </div>
                 <div className="movie-filter grid-24 margin-16">
                     <FilterCard setFilterParam={setFilterParam} />
@@ -102,6 +104,8 @@ export function ReleasedMovies(props) {
 
     const { title, genres, artists, startDate, endDate } = props.filterParam;
 
+    const params = useParams()
+
     useEffect(() => {
         getReleasedMovies()
     }, [props.filterParam])
@@ -132,6 +136,13 @@ export function ReleasedMovies(props) {
         }
     }
 
+    const onMovieItemClick = (id) => {
+        props.history.push({
+            pathname: "/movie/" + params.id,
+            movieId: id
+        });
+    }
+
     return (
         <ImageList
             rowHeight={350}
@@ -141,16 +152,16 @@ export function ReleasedMovies(props) {
         >
             {
                 releasedMovies.map((movie) => (
-                    <ImageListItem key={movie.id} className='back'>
-                        <img src={movie.poster_url} alt={movie.title} />
-                        <ImageListItemBar title={movie.title} subtitle={`Released Date : ${movie.release_date}`} />
-                    </ImageListItem>
+                    <Link to={`/movie/${movie.id}`}>
+                        <ImageListItem key={movie.id} className='back' >
+                            <img src={movie.poster_url} alt={movie.title} />
+                            <ImageListItemBar title={movie.title} subtitle={`Released Date : ${movie.release_date}`} />
+                        </ImageListItem>
+                    </Link>
                 ))
             }
         </ImageList>
     )
 }
-
-
 
 export default Home;
