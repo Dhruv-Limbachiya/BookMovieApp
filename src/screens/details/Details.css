@@ -27,3 +27,18 @@
 .field-label {
     font-weight: bold;
 }
+
+.yellow {
+    color: yellow;
+    cursor: pointer;
+}
+
+.black {
+    color: black;
+    cursor: pointer;
+}
+
+.artists-heading{
+    margin: 16px 0px;
+}
+
