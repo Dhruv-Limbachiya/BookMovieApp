@@ -81,7 +81,7 @@ function Details(props) {
   var releaseDate = new Date(movieDetail.release_date).toDateString();
   let youtubeId = youtubeUrl.split("=")[1];
   let opts = {
-    height: "300",
+    height: "270",
     width: '100%',
     playerVars: {
       autoplay: 0,
