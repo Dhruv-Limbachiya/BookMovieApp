@@ -104,8 +104,6 @@ export function ReleasedMovies(props) {
 
     const { title, genres, artists, startDate, endDate } = props.filterParam;
 
-    const params = useParams()
-
     useEffect(() => {
         getReleasedMovies()
     }, [props.filterParam])
