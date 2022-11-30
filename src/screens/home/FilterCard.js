@@ -10,7 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
-
+// Custom Styles for Filter Card Form
 const styles = (theme) => ({
     formControl: {
         margin: theme.spacing.unit,
@@ -48,6 +48,7 @@ function FilterCard(props) {
         getArtists();
     }, [])
 
+    // Get genres from the api
     const getGenres = async () => {
         try {
             const rawResponse = await fetch('http://localhost:8085/api/v1/genres', {
@@ -70,6 +71,7 @@ function FilterCard(props) {
         }
     }
 
+    // Get artists from the api
     const getArtists = async () => {
         try {
             const rawResponse = await fetch('http://localhost:8085/api/v1/artists?limit=20', {
@@ -92,14 +94,11 @@ function FilterCard(props) {
         }
     }
 
-
+    // Handle 'Apply' Button click.
     const applyFilterHandler = () => {
-        console.log(genre)
-
         let paramGenre = '';
-
         for (let i = 0; i < genre.length; i++) {
-            if (genre.length == i + 1) {
+            if (genre.length === i + 1) {
                 paramGenre += genre[i]['genre']
             } else {
                 paramGenre += genre[i]['genre'] + ','
@@ -107,15 +106,15 @@ function FilterCard(props) {
         }
 
         let paramArtist = '';
-
         for (let i = 0; i < artist.length; i++) {
-            if (artist.length == i + 1) {
+            if (artist.length === i + 1) {
                 paramArtist += artist[i]['first_name'] + ' ' + artist[i]['last_name']
             } else {
                 paramArtist += artist[i]['first_name'] + ' ' + artist[i]['last_name'] + ','
             }
         }
 
+        // Combining all filter values into params object
         const params = {
             'title': movie,
             'genres': paramGenre,
@@ -123,6 +122,7 @@ function FilterCard(props) {
             'startDate': startDate,
             'endDate': endDate
         }
+
         props.setFilterParam(params)
     }
 
@@ -130,7 +130,6 @@ function FilterCard(props) {
     const onMovieNameChanged = (e) => {
         setMovie(e.target.value)
     }
-
 
     const [startDate, setStartDate] = useState('')
     const onStartDateChanged = (e) => {
@@ -142,12 +141,11 @@ function FilterCard(props) {
         setEndDate(e.target.value)
     }
 
-
     return (
         <Card sx={{ margin: 'auto' }}>
             <CardContent>
                 <div className={classes.formControl} >
-                    <h5 className={classes.cardTitle} >Find Movies By:</h5>
+                    <h6 className={classes.cardTitle} >Find Movies By:</h6>
                 </div>
 
                 <FormControl className={classes.formControl}>
@@ -200,7 +198,6 @@ function FilterCard(props) {
                     <TextField
                         label="Release Date Start"
                         type="date"
-                        defaultValue="dd-mm-yyyy"
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -213,7 +210,6 @@ function FilterCard(props) {
                     <TextField
                         label="Release Date End"
                         type="date"
-                        defaultValue="dd-mm-yyyy"
                         InputLabelProps={{
                             shrink: true,
                         }}

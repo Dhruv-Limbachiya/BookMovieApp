@@ -8,10 +8,8 @@ import FilterCard from "./FilterCard";
 import '../../common/stylesheet/common.css'
 import { Link } from 'react-router-dom';
 
-
-
 const Home = (props) => {
-
+    // Store filter param object to filter in filterParam state
     const [filterParam, setFilterParam] = useState({
         'title': '',
         'genres': '',
@@ -43,6 +41,10 @@ const Home = (props) => {
     )
 }
 
+/**
+ * Function responsible for rendering upcoming movies from the API
+ * @returns return upcoming movies 
+ */
 export function UpcomingMovies() {
     const [upcomingMovies, setUpcomingMovies] = useState([])
 
@@ -98,10 +100,13 @@ export function UpcomingMovies() {
 }
 
 
+/**
+ * Function responsible for rendering released movies from the API
+ * @param {*} props 
+ * @returns Released Movies
+ */
 export function ReleasedMovies(props) {
-
     const [releasedMovies, setReleasedMovies] = useState([])
-
     const { title, genres, artists, startDate, endDate } = props.filterParam;
 
     useEffect(() => {
@@ -143,7 +148,7 @@ export function ReleasedMovies(props) {
         >
             {
                 releasedMovies.map((movie) => (
-                    <Link to={`/movie/${movie.id}`}>
+                    <Link to={`/movie/${movie.id}`} key={movie.id}>
                         <ImageListItem key={movie.id} className='back'>
                             <img src={movie.poster_url} alt={movie.title} />
                             <ImageListItemBar title={movie.title} subtitle={`Released Date : ${movie.release_date}`} />
