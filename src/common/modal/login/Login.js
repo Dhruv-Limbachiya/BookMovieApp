@@ -5,11 +5,15 @@ import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import '../../stylesheet/common.css';
 
 const Login = (props) => {
+
+    // Holds username and password state.
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    // States to manage login form validation
     const [reqUsername, setReqUsername] = useState('dispNone')
     const [reqPassword, setReqPassword] = useState('dispNone')
 
@@ -24,7 +28,10 @@ const Login = (props) => {
 
     const onLoginButtonClick = async () => {
         if (validateUserInput()) {
+            // Encode username & password into Base64 Encoded ASCII string (For authorization)
             const param = window.btoa(`${username[0]}:${password[0]}`)
+           
+            // Make Login API call
             try {
                 const rawResponse = await fetch('http://localhost:8085/api/v1/auth/login', {
                     method: "POST",
@@ -38,11 +45,12 @@ const Login = (props) => {
                 const response = await rawResponse.json()
 
                 if (rawResponse.ok) {
+                    // Store user details and access token in session storage.
                     window.sessionStorage.setItem('user-details', JSON.stringify(response));
                     window.sessionStorage.setItem('access-token', rawResponse.headers.get('access-token'));
                     if(sessionStorage.getItem('access-token')) {
-                        props.setIsLoggedIn(true);
-                        props.handleClose()
+                        props.setIsLoggedIn(true); // Notify Header's button about successful user login. Make "Logout" visible and hide "Login" button
+                        props.handleClose() // Will close the modal
                     }
                 } else {
                     throw (new Error(response.message || 'Something went wrong!'))
@@ -54,11 +62,11 @@ const Login = (props) => {
         return;
     }
 
-    const validateUserInput = () => {
+    const validateUserInput = () => { 
         username === '' ? setReqUsername('dispBlock') : setReqUsername("dispNone");
         password === '' ? setReqPassword('dispBlock') : setReqPassword("dispNone");
 
-        if (username === "" || password === "") {
+        if (username  === '' || password  === '') {
             return false;
         }
 
@@ -79,9 +87,9 @@ const Login = (props) => {
 
 
                 <br /> <br />
-                <FormControl required className="formControl">
+                <FormControl required  className="formControl">
                     <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input id="password" value={password} onChange={onPasswordChange} />
+                    <Input id="password" type="password" value={password} onChange={onPasswordChange} />
                     <FormHelperText className={reqPassword}>
                         <span className="red">Required</span>
                     </FormHelperText>

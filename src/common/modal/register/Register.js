@@ -6,7 +6,8 @@ import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import '../stylesheet/Modal.css'
 
-const Register = (props) => {
+const Register = () => {
+    // States.
     const [firstName, setFirstName] = useState('');
     const [reqFirstName, setReqFirstName] = useState("dispNone");
 
@@ -24,6 +25,7 @@ const Register = (props) => {
 
     const [registrationStatus, setRegistrationStatus] = useState(false);
 
+    // Input Changed Handler
     const onFirstNameChanged = (e) => {
         setFirstName(e.target.value.split(","))
     }
@@ -77,6 +79,10 @@ const Register = (props) => {
         }
     }
 
+    /**
+     * Method to validate user input.
+     * @returns true : Valid Input , false : Invalid Input
+     */
     const validateUserInput = () => {
         firstName === "" ? setReqFirstName("dispBlock") : setReqFirstName("dispNone");
         lastName === "" ? setReqLastName("dispBlock") : setReqLastName("dispNone");
@@ -140,7 +146,7 @@ const Register = (props) => {
 
                 <br /> <br />
 
-                <FormControl required  className="formControl">
+                <FormControl required className="formControl">
                     <InputLabel htmlFor="contact-no">Contact No.</InputLabel>
                     <Input id="contact-no" value={contactNo} onChange={onContactNoChanged} />
                     <FormHelperText className={reqContactNo}>
@@ -151,7 +157,7 @@ const Register = (props) => {
                 <br /> <br />
 
                 {registrationStatus ? <RegistrationSuccessMessage /> : null}
-                
+
             </div>
 
             <br />
@@ -168,6 +174,10 @@ const Register = (props) => {
     )
 }
 
+/**
+ * Function to display on successful registration
+ * @returns Register Successful Message
+ */
 function RegistrationSuccessMessage() {
     return (
         <div><p>Registration Successful. Please Login!</p></div>

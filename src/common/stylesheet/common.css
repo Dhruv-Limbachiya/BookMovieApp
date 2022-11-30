@@ -1,3 +1,11 @@
 .back {
     cursor: pointer;
 }
+
+.dispNone {
+    display: none;
+}
+
+.dispBlock {
+    display: block;
+}

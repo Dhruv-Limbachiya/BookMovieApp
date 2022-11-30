@@ -28,7 +28,7 @@ const modalBoxStyle = {
 
 const Header = (props) => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // state to track user log in status
 
     // state to manage modal
     const [open, setOpen] = React.useState(false);
@@ -51,7 +51,7 @@ const Header = (props) => {
     }, [])
 
 
-    let headerButton;
+    let headerButton; // Variable to hold either login or logout button
 
     if (isLoggedIn) {
         headerButton = <Button variant='contained' onClick={onLogoutButtonClick}>Logout</Button>
@@ -60,6 +60,9 @@ const Header = (props) => {
     }
 
 
+    /**
+     * Perform Logout API Call
+     */
     async function onLogoutButtonClick() {
         try {
             const rawResponse = await fetch('http://localhost:8085/api/v1/auth/logout', {
@@ -82,6 +85,10 @@ const Header = (props) => {
         }
     }
 
+    /**
+     * Method to display login/registration modal
+     * @returns Modal with Login & Registration Tabs
+     */
     function LoginRegisterModal() {
         return (
             <Modal
@@ -105,13 +112,14 @@ const Header = (props) => {
         )
     }
 
-    const onBookButtonClick = () => {
+    /**
+     * Handle book show button clicks
+     */
+    const onBookShowButtonClick = () => {
         if (!isLoggedIn) {
-            handleOpen()
+            handleOpen() 
         }
     }
-
-    const bookNowButton = '';
 
     return (
         <div className="header">
@@ -121,9 +129,9 @@ const Header = (props) => {
             <div>
                 {props.showBookNow ?
                     (isLoggedIn ? <Link to={`/bookshow/${props.movieId}`} style={{ textDecoration: 'none' }}>
-                                     <Button variant='contained' color='primary' style={{ marginRight: "10px" }}>Book Show</Button>
-                                  </Link> 
-                                : <Button variant='contained' color='primary' style={{ marginRight: "10px" }} onClick={onBookButtonClick}>Book Show</Button>)
+                        <Button variant='contained' color='primary' style={{ marginRight: "10px" }}>Book Show</Button>
+                    </Link>
+                        : <Button variant='contained' color='primary' style={{ marginRight: "10px" }} onClick={onBookShowButtonClick}>Book Show</Button>)
                     : null
                 }
                 {headerButton}

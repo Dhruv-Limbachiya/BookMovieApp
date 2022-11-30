@@ -6,7 +6,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import FilterCard from "./FilterCard";
 import '../../common/stylesheet/common.css'
-import { Link, useParams} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
@@ -144,7 +144,7 @@ export function ReleasedMovies(props) {
             {
                 releasedMovies.map((movie) => (
                     <Link to={`/movie/${movie.id}`}>
-                        <ImageListItem key={movie.id} className='back' >
+                        <ImageListItem key={movie.id} className='back'>
                             <img src={movie.poster_url} alt={movie.title} />
                             <ImageListItemBar title={movie.title} subtitle={`Released Date : ${movie.release_date}`} />
                         </ImageListItem>
