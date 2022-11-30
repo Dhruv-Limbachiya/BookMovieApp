@@ -87,13 +87,15 @@ export function UpcomingMovies() {
                 margin: 'auto',
                 overflowY: 'hidden'
             }}>
-            {
+            {upcomingMovies ?
                 upcomingMovies.map((movie) => (
                     <ImageListItem key={movie.id}>
                         <img src={movie.poster_url} alt={movie.title} />
                         <ImageListItemBar title={movie.title} />
                     </ImageListItem>
                 ))
+
+                : <h6>No upcoming movies data available</h6>
             }
         </ImageList>
     )
@@ -146,7 +148,7 @@ export function ReleasedMovies(props) {
             sx={{ overflow: 'hidden', margin: 'auto' }}
             gap={10}
         >
-            {
+            {releasedMovies ?
                 releasedMovies.map((movie) => (
                     <Link to={`/movie/${movie.id}`} key={movie.id}>
                         <ImageListItem key={movie.id} className='back'>
@@ -155,6 +157,10 @@ export function ReleasedMovies(props) {
                         </ImageListItem>
                     </Link>
                 ))
+
+                :
+
+                <h6>No released movies data available</h6>
             }
         </ImageList>
     )

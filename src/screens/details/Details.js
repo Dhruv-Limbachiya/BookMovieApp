@@ -13,11 +13,13 @@ import '../../common/stylesheet/common.css'
 
 
 function Details(props) {
+  // states 
   const [movieDetail, setMovieDetail] = useState({})
   const [genres, setGenres] = useState([])
   const [artists, setArtists] = useState([])
   const [youtubeUrl, setYoutubeUrl] = useState("")
 
+  // Array to manage rating bar color props
   const [starIcons, setStarIcons] = useState([{
     id: 1,
     stateId: "star1",
@@ -51,6 +53,7 @@ function Details(props) {
   }, [])
 
 
+  // Make an movie detail api call based on the movie id
   const getMovieDetail = async () => {
     const movieId = props.match.params.id;
     try {
@@ -66,6 +69,7 @@ function Details(props) {
       const response = await rawResponse.json()
 
       if (rawResponse.ok) {
+        // set all the states.
         setMovieDetail(response);
         setGenres(response.genres)
         setYoutubeUrl(response.trailer_url)
@@ -78,8 +82,11 @@ function Details(props) {
     }
   }
 
-  var releaseDate = new Date(movieDetail.release_date).toDateString();
-  let youtubeId = youtubeUrl.split("=")[1];
+  var releaseDate = new Date(movieDetail.release_date).toDateString(); // converts the date
+
+  let youtubeId = youtubeUrl.split("=")[1]; // Retrieve youtube video id from the video url
+
+  // Youtube Player Configuration
   let opts = {
     height: "270",
     width: '100%',
@@ -89,9 +96,10 @@ function Details(props) {
     },
   };
 
+  // Handles Rating click events
   const starClickHandler = (id) => {
     let starIconList = [];
-    
+
     for (let star of starIcons) {
       let starNode = star;
       if (star.id <= id) {
@@ -106,6 +114,7 @@ function Details(props) {
     setStarIcons(starIconList);
   }
 
+  // Customs style
   const useStyles = makeStyles({
     root: {
       display: "flex",
@@ -132,11 +141,12 @@ function Details(props) {
       </div>
 
       <div className='detail-container'>
-
+        {/* Poster */}
         <div className='image-container ratio-20'>
-          <img src={movieDetail.poster_url} alt={movieDetail.title} width='226px' height='326px'/>
+          <img src={movieDetail.poster_url} alt={movieDetail.title} width='226px' height='326px' />
         </div>
 
+        {/* Movies Detail */}
         <div className='ratio-60'>
           <Typography variant='headline' component='h2'>{movieDetail.title}</Typography>
 
@@ -167,7 +177,9 @@ function Details(props) {
           </Typography>
 
           <Typography sx={{ marginTop: '16px' }}>
-            <b>Youtube: </b>
+            <b>Trailer: </b>
+          </Typography>
+          <div>
             <YouTube
               videoId={youtubeId}
               opts={opts}
@@ -175,25 +187,26 @@ function Details(props) {
                 event.target.pauseVideo();
               }}
             />
-          </Typography>
+          </div>
 
         </div>
 
-        <div className='ratio-20' style={{marginRight:'16px'}}>
+        {/* Artists */}
+        <div className='ratio-20' style={{ marginRight: '16px' }}>
           <Typography>
             <b>Rate this movie: </b>
-            <div className="star-container">
-              {
-                starIcons.map(star => (
-                  <StarBorderIcon
-                    className={star.color}
-                    key={"star" + star.id}
-                    onClick={() => starClickHandler(star.id)}
-                  />
-                ))
-              }
-            </div>
           </Typography>
+          <div className="star-container">
+            {
+              starIcons.map(star => (
+                <StarBorderIcon
+                  className={star.color}
+                  key={"star" + star.id}
+                  onClick={() => starClickHandler(star.id)}
+                />
+              ))
+            }
+          </div>
 
           <div className='artists-heading'>
             <Typography>
@@ -201,7 +214,7 @@ function Details(props) {
             </Typography>
           </div>
           <div>
-            <GridList cellHeight={180} className={classes.gridList}>
+            <GridList cellHeight={180} className={classes.gridList} cols={2}>
               {artists ? (
                 artists.map((artist) => (
                   <GridListTile key={artist.id}>
